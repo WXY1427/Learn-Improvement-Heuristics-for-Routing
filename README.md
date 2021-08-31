@@ -1,6 +1,6 @@
 # Learn-Improvement-Heuristics-for-Routing
 
-Simple overview of use/purpose.
+A deep reinforcement learning framework to learn the improvement heuristics for routing problems.
 
 ## Description
 
