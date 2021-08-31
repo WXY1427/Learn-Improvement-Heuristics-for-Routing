@@ -17,10 +17,6 @@ def get_options(args=None):
                          help='Number of instances used for reporting validation performance')  
     parser.add_argument('--val_dataset', type=str, default=None, help='Dataset file to use for validation')
 
-#     # Model
-#     parser.add_argument('--model', default='attention', help="Model, 'attention' (default) or 'pointer'")
-
-
     ### training
     parser.add_argument('--no_cuda', action='store_true', help='Disable CUDA')
     parser.add_argument('--seed', type=int, default=1234, help='Random seed to use')
