@@ -62,15 +62,11 @@ class AttentionModel(nn.Module):
             self.init_embed_depot = nn.Linear(2, embedding_dim)
             
             if self.allow_partial:  # Need to include the demand if split delivery allowed
-                self.project_node_step = nn.Linear(1, 3 * embedding_dim, bias=False)           ###############?????????????????????
+                self.project_node_step = nn.Linear(1, 3 * embedding_dim, bias=False)           
         else:  # TSP
             assert problem.NAME == 'tsp', "Unsupported problem: {}".format(problem.NAME)
 
-            node_dim = 2  # x, y
-            
-#             # Learned input symbols for first action
-#             self.W_placeholder = nn.Parameter(torch.Tensor(2 * embedding_dim))
-#             self.W_placeholder.data.uniform_(-1, 1)  # Placeholder should be in range of activations
+            node_dim = 2  # x, y            
 
         self.init_embed = nn.Linear(node_dim, embedding_dim)
 
@@ -93,8 +89,6 @@ class AttentionModel(nn.Module):
         :param input: (batch_size, graph_size, node_dim) input node features
         :return:
         """
-            
-#         input_info, pos_encoding = self._emdedding(input, rec)
             
         embedding, soft_max, exchange, entropy = self.embedder(self.init_embed(input_info)+pos, embed, test, exc)            
 
@@ -146,65 +140,3 @@ class AttentionModel(nn.Module):
             
         return torch.stack(node_2_cor, 1)
     
-
-
-#     def _emdedding(self, input, rec):
-        
-#         ########## input: batch_size, graph, 2
-        
-#         bs, gs = rec.size()
-        
-#         seq_tensor_index = rec.long()
-        
-#         node_2_cor = []
-        
-#         for i in range(gs):
-            
-#             cor = torch.nonzero(rec.long() == i)
-            
-#             pre = seq_tensor_index[cor[:,0], cor[:,1]]
-            
-# #             mid = seq_tensor_index[cor[:,0], cor[:,1]+1]
-            
-#             cor_indice = pre[:,None]
-            
-#             cor_single = input.gather(1, cor_indice[..., None].expand(*cor_indice.size(), 2))  
-            
-#             cor_single_fla = cor_single.view(cor_single.size(0),-1)
-            
-#             node_2_cor.append(cor_single_fla)
-            
-#         return torch.stack(node_2_cor, 1)
-    
-#     def _emdedding(self, input, rec):
-        
-#         ########## input: batch_size, graph, 2
-        
-#         bs, gs = rec.size()
-        
-#         seq_tensor_index = rec.long()
-        
-#         node_2_cor = []
-        
-#         for i in range(gs):
-            
-#             cor = torch.nonzero(rec.long() == i)
-            
-#             sub_ed = cor[:,1].expand(gs, bs)
-            
-#             sub = torch.linspace(0, gs-1, steps=gs).expand(bs, gs).transpose(0,1)
-            
-#             col = sub_ed-sub.long().cuda()
-            
-#             cor_indice = seq_tensor_index[cor[:,0], col]          
-            
-#             cor_indice = cor_indice.transpose(0,1)
-            
-#             cor_single = input.gather(1, cor_indice[..., None].expand(*cor_indice.size(), 2))  
-            
-#             cor_single_fla = cor_single.view(cor_single.size(0),-1)
-            
-#             node_2_cor.append(cor_single_fla)
-            
-#         return torch.stack(node_2_cor, 1)
-            
