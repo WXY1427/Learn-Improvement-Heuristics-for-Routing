@@ -305,41 +305,24 @@ class GraphAttentionEncoder(nn.Module):
     ):
         super(GraphAttentionEncoder, self).__init__()
 
-        # To map input to embedding space
-#         self.init_embed = nn.Linear(node_dim, embed_dim) if node_dim is not None else None
-        
-#         self.global_1 = nn.Linear(2*embed_dim, embed_dim)
-        
-#         self.global_2 = nn.Linear(embed_dim, embed_dim)
-        
-#         self.norm = nn.BatchNorm1d(embed_dim, affine=True)
-
         self.layers = nn.Sequential(*(
             MultiHeadAttentionLayer(n_heads, embed_dim, feed_forward_hidden, normalization)
             for _ in range(n_layers)
         ))
         
         self.one_attn = MultiHeadAttention_to_attn(n_heads, input_dim=embed_dim, embed_dim=embed_dim)        
-#         self.one_attn = one_step_to_get_attn(n_heads, embed_dim, feed_forward_hidden, normalization)
 
         self.project_graph = nn.Linear(embed_dim, embed_dim, bias=False)
         
         self.project_node = nn.Linear(embed_dim, embed_dim, bias=False)
         
         self.heads = n_heads
-        
-#         self.second_attn = second_step_to_get_attn(n_heads, embed_dim, feed_forward_hidden, normalization)
 
     def forward(self, x, embedding, test, exchange, mask=None):
 
-        assert mask is None, "TODO mask not yet supported!"
-
-        # Batch multiply to get initial embeddings of nodes
-#         h = self.init_embed(x.view(-1, x.size(-1))).view(*x.size()[:2], -1) if self.init_embed is not None else x      
+        assert mask is None, "TODO mask not yet supported!"   
 
         bs, gs, in_d = x.size()
-
-#         h = x + embedding
 
         h_em = self.layers(x)
         
@@ -350,13 +333,9 @@ class GraphAttentionEncoder(nn.Module):
         node_feature = self.project_node(h_em) ######## batchsize, gs, embed_dim
         
         fusion = node_feature + fixed_context.expand_as(node_feature)
-        
-#         h_em = self.layers_fusion(fusion)
 
         ### attn: (n_heads, batch_size, n_query, graph_size)
-        att, att_s = self.one_attn(fusion, exchange)  
-#         att, att_s = self.one_attn(h_em, exchange)     
-        
+        att, att_s = self.one_attn(fusion, exchange)     
 
         if test:   
             atten = att_s.view(self.heads, bs, gs, gs)   # for max selection
@@ -378,7 +357,7 @@ class GraphAttentionEncoder(nn.Module):
             exc = exc[None,:,:]
             att_en = att.clone()
             att_en[att<-10000] = 0
-#         assert (softmax_max > -1000).data.all(), "Logprobs should not be -inf, check sampling procedure!"
+
         return (
             h_em.detach(),  # (batch_size, graph_size, embed_dim)
             softmax_max,
