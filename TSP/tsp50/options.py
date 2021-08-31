@@ -11,10 +11,10 @@ def get_options(args=None):
     # Data
     parser.add_argument('--problem', default='tsp', help="The problem to solve, default 'cvrp'")
     parser.add_argument('--graph_size', type=int, default=50, help="The size of the problem graph")
-    parser.add_argument('--batch_size', type=int, default=1024, help='Number of instances per batch during training') #####512
-    parser.add_argument('--epoch_size', type=int, default=10240, help='Number of instances per epoch during training')  #1280000
+    parser.add_argument('--batch_size', type=int, default=1024, help='Number of instances per batch during training') 
+    parser.add_argument('--epoch_size', type=int, default=10240, help='Number of instances per epoch during training')  
     parser.add_argument('--val_size', type=int, default=1000,
-                         help='Number of instances used for reporting validation performance')  ####### 10000
+                         help='Number of instances used for reporting validation performance')  
     parser.add_argument('--val_dataset', type=str, default=None, help='Dataset file to use for validation')
 
 #     # Model
@@ -30,7 +30,7 @@ def get_options(args=None):
     parser.add_argument('--n_epochs', type=int, default=100, help='The number of epochs to train')
     parser.add_argument('--eval_only', action='store_true', help='Set this value to only evaluate model')
     parser.add_argument('--eval_batch_size', type=int, default=1000,
-    help="Batch size to use during (baseline) evaluation")   ###### 1024
+    help="Batch size to use during (baseline) evaluation")   
     parser.add_argument('--max_grad_norm', type=float, default=1.0,
     help='Maximum L2 norm for gradient clipping, default 1.0 (0 to disable clipping)')
     parser.add_argument('--embedding_dim', type=int, default=128, help='Dimension of input embedding')
@@ -54,7 +54,7 @@ def get_options(args=None):
     parser.add_argument('--epo_res_dir', default='epo_res', help='Directory to write output models to')     
     parser.add_argument('--run_name', default='run', help='Name to identify the run')
     parser.add_argument('--load_path', help='Path to load model parameters and optimizer state from')
-    ######default='outputs/tsp_50/run/epoch-199.pt', 
+
     parser.add_argument('--resume', help='Resume from previous checkpoint file')
     parser.add_argument('--epoch_start', type=int, default=0,
     help='Start at epoch # (relevant for learning rate decay)')
