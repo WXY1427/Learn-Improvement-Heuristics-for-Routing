@@ -8,8 +8,13 @@ For each problem and size:
 
 ### Training
 
-* Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-* ex. Windows 10
+```
+code blocks for commands
+```
+or
+```
+code blocks for commands
+```
 
 ### Testing
 
