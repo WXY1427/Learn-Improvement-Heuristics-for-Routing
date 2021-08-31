@@ -1,0 +1,45 @@
+nohup: ignoring input
+{'baseline': 'critic',
+ 'batch_size': 1024,
+ 'checkpoint_epochs': 1,
+ 'embedding_dim': 128,
+ 'epo_res': 'epo_res/tsp_50/run',
+ 'epo_res_dir': 'epo_res',
+ 'epoch_size': 10240,
+ 'epoch_start': 0,
+ 'eval_batch_size': 1000,
+ 'eval_only': False,
+ 'graph_size': 50,
+ 'hidden_dim': 128,
+ 'lambda': 0.8,
+ 'load_path': None,
+ 'log_dir': 'logs',
+ 'log_step': 50,
+ 'lr_critic': 0.0001,
+ 'lr_decay': 0.99,
+ 'lr_model': 0.0001,
+ 'max_grad_norm': 1.0,
+ 'n_encode_layers': 3,
+ 'n_epochs': 100,
+ 'no_cuda': False,
+ 'no_progress_bar': False,
+ 'no_tensorboard': False,
+ 'normalization': 'batch',
+ 'output_dir': 'outputs',
+ 'problem': 'tsp',
+ 'resume': None,
+ 'run_name': 'run',
+ 'save_dir': 'outputs/tsp_50/run',
+ 'seed': 1234,
+ 'steps': 10,
+ 'tanh_clipping': 10.0,
+ 'use_cuda': True,
+ 'val_dataset': None,
+ 'val_size': 1000}
+Start train epoch 0, lr=0.0001 for run run
+Start train epoch 0, lr=0.0001 for run run
+  0%|          | 0/10 [00:00<?, ?it/s]/home/yaoxin/.local/lib/python3.5/site-packages/torch/nn/functional.py:1320: UserWarning: nn.functional.tanh is deprecated. Use torch.tanh instead.
+  warnings.warn("nn.functional.tanh is deprecated. Use torch.tanh instead.")
+/home/yaoxin/myproject/jupyter-file/TSP/TSP_1024_50_github/train.py:169: UserWarning: torch.nn.utils.clip_grad_norm is now deprecated in favor of torch.nn.utils.clip_grad_norm_.
+  for group in param_groups
+ 10%|█         | 1/10 [02:01<18:16, 121.79s/it]
