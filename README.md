@@ -1,6 +1,6 @@
 # Learn-Improvement-Heuristics-for-Routing
 
-A deep reinforcement learning framework to learn the improvement heuristics （with pairwise loca operators, e.g. 2-opt, swap, reinsertion） for routing problems.
+A deep reinforcement learning framework to learn the improvement heuristics （with pairwise local operators, e.g. 2-opt, swap, reinsertion） for routing problems.
 
 ## Running the program
 
