@@ -18,8 +18,13 @@ RUN MY MODEL.ipynb
 
 ### Testing
 
-* How/where to download your program
-* Any modifications needed to be made to files/folders
+```
+python3 test.py
+```
+or run jupyter file
+```
+Test with model.ipynb
+```
 
 ### Executing program
 
