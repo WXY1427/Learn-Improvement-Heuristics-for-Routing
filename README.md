@@ -26,15 +26,7 @@ or run jupyter file
 Test with model.ipynb
 ```
 
-### Executing program
-
-* How to run the program
-* Step-by-step bullets
-```
-code blocks for commands
-```
-
-## Help
+## For details please refer to:
 
 Any advise for common problems or issues.
 ```
