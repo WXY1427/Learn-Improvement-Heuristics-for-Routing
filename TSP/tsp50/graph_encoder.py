@@ -193,9 +193,8 @@ class MultiHeadAttention_to_attn(nn.Module):
         # Calculate compatibility (n_heads, batch_size, n_query, graph_size)
         compatibility = self.norm_factor * torch.matmul(Q, K.transpose(2, 3))
         compatibility = F.tanh(compatibility) * 10.
-#         compatibility = compatibility *0.8
-#         mask_dia = torch.eye(graph_size).view(1,1,graph_size,graph_size).expand_as(compatibility)
-#         compatibility[mask_dia.byte()] = -np.inf
+        mask_dia = torch.eye(graph_size).view(1,1,graph_size,graph_size).expand_as(compatibility)
+        compatibility[mask_dia.byte()] = -np.inf
         if exchange is not None:
             compatibility[0][torch.arange(batch_size), exchange[:,1], exchange[:,0]] = -np.inf            
             compatibility[0][torch.arange(batch_size), exchange[:,0], exchange[:,1]] = -np.inf
