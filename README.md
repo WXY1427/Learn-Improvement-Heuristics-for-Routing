@@ -2,11 +2,7 @@
 
 A deep reinforcement learning framework to learn the improvement heuristics for routing problems.
 
-## Description
-
-An in-depth paragraph about your project and overview of use.
-
-## Getting Started
+## Running the program
 
 ### Dependencies
 
