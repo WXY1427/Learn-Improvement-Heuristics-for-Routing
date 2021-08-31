@@ -11,7 +11,7 @@ For each problem and size:
 ```
 python3 run.py
 ```
-or run
+or run jupyter file
 ```
 RUN MY MODEL.ipynb
 ```
