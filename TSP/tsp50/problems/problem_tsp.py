@@ -80,12 +80,7 @@ class TSPDataset(Dataset):
                 self.data = [torch.FloatTensor(row) for row in data[:num_samples]]
         else:
             # Sample points randomly in [0, 1] square
-            self.data = [torch.FloatTensor(size, 2).uniform_(0, 1) for i in range(num_samples)]
-            
-#             with open('TSPlib/data/pr76.pkl', 'rb') as f:    
-#                data = pickle.load(f)
-
-#             self.data = [torch.FloatTensor(data).squeeze() for i in range(num_samples)]            
+            self.data = [torch.FloatTensor(size, 2).uniform_(0, 1) for i in range(num_samples)]        
 
         self.size = len(self.data)
 
