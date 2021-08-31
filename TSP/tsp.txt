@@ -1,1 +1,1 @@
-tsp code
+code for tsp 50 and 100
