@@ -4,12 +4,14 @@ A deep reinforcement learning framework to learn the improvement heuristics for 
 
 ## Running the program
 
-### Dependencies
+For each problem and size:
+
+### Training
 
 * Describe any prerequisites, libraries, OS version, etc., needed before installing program.
 * ex. Windows 10
 
-### Installing
+### Testing
 
 * How/where to download your program
 * Any modifications needed to be made to files/folders
