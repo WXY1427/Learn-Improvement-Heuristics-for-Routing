@@ -9,11 +9,11 @@ For each problem and size:
 ### Training
 
 ```
-code blocks for commands
+python3 run.py
 ```
-or
+or run
 ```
-code blocks for commands
+RUN MY MODEL.ipynb
 ```
 
 ### Testing
