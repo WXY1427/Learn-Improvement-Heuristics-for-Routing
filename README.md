@@ -30,7 +30,7 @@ Test with model.ipynb
 
 ```
 @article{wu2021learning,
-  title={Learning Improvement Heuristics for Solving Routing Problems..},
+  title={Learning Improvement Heuristics for Solving Routing Problems},
   author={Wu, Yaoxin and Song, Wen and Cao, Zhiguang and Zhang, Jie and Lim, Andrew},
   journal={IEEE Transactions on Neural Networks and Learning Systems},
   year={2021},
