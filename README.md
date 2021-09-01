@@ -26,7 +26,7 @@ or run jupyter file
 Test with model.ipynb
 ```
 
-## Visualization of Solving TSP and CVRP instances
+## Visualization of Solving TSP and CVRP
 
 
 https://youtu.be/97ZXp9zSEK8
