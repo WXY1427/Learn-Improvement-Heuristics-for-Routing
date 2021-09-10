@@ -29,17 +29,12 @@ class CVRP(object):
         :param exchange: (n_heads, batch_size, 2) meaning exchange two nodes;
         :return: (batch_size) reward: improving of the length
         """
-
-#         exchange_one_head = exchange  ############ batch_size, 2 
         
         batch_size, graph_size = dataset['demand'].size()
-
-#         loc_with_depot = torch.cat((dataset['depot'][:, None, :], dataset['loc']), 1)   ########## batch_size, graph+1, 2
         loc_with_depot = dataset['loc']   ########## batch_size, graph+1, 2   
     
         comb_num, g2s = dic.size()
 
-        ########## length of previous
         if exchange is None:  
 
             pi = rec-1 
@@ -66,28 +61,13 @@ class CVRP(object):
 
             return length_now, rec, cm.flatten()
         else:
-            ############# change the record    
-#             start_time = time.time()
-#             rec_new = rec.cpu()
-#             exchange_sort = exchange.sort(1)[0].cpu()
-#             for i in range(batch_size):
-#                 inter = torch.narrow(rec_new[i], 0, exchange_sort[i][0], exchange_sort[i][1]-exchange_sort[i][0]+1).clone()
-#                 rec_new[i][exchange_sort[i][0]:exchange_sort[i][1]+1] = torch.flip(inter,[0])
-#             rec_new= rec_new.cuda()
-#             epoch_duration = time.time() - start_time
-#             print(epoch_duration) 
 
             rec_new = rec.cpu()
             exchange_sort = exchange.sort(1)[0].cpu()
             for i in range(batch_size):
                 inter = rec_new[i][exchange_sort[i][0]:exchange_sort[i][1]+1].clone()
                 rec_new[i][exchange_sort[i][0]:exchange_sort[i][1]+1] = torch.flip(inter,[0])
-            rec_new= rec_new.cuda()
-
-#             che = CVRP.seq_tensor1(dataset['demand'].cpu(), rec_new.cpu()) 
-#             che = CVRP.seq_tensor3(dataset, rec_new) 
-
-        
+            rec_new= rec_new.cuda()     
          
             pi = rec_new-1
 
@@ -120,16 +100,13 @@ class CVRP(object):
     
     @staticmethod
     def seq_tensor(input, rec, capacity=1.):
-#         input = {k: v.cpu() for k, v in input.items()}
+
         depot_loc = CVRP.addings(input, rec)
-#         depot_loc = depot_loc.cuda()
-#         print(depot_loc)
         bs, gs = input['demand'].size()
         matrix_i = torch.ones(bs,2*gs).long().cuda()
         matrix_acc = torch.zeros(bs,2*gs).long().cuda()
         counter = 0
         for i in range(gs-1):
-#             print(depot_loc[:,i])
             matrix_i[torch.arange(bs).cuda(), depot_loc[:,i]+1+counter]=0 
             counter+=1   
         matrix_z_i = matrix_i.clone()
@@ -149,8 +126,6 @@ class CVRP(object):
         bs, g2s = rec.size()
       
         inp_dem = input[:,None,:].expand(input.size()[0], bs//input.size()[0], g2s).reshape(-1,g2s)
-
-#         bs, g2s = inp_dem.size()
         
         demand = inp_dem.clone()
 
@@ -182,7 +157,6 @@ class CVRP(object):
         loc_now_cpu = loc_now.cpu()
         dep_cor = batch['depot'].cpu()
         lis = []
-#         saving_v_lis = []
         saving_i_lis = []
         for d in range(bs):
 
@@ -192,23 +166,12 @@ class CVRP(object):
             ind = torch.arange(gs-1).cuda()
             sav = did_sum[ind, ind+1]-dij[ind, ind+1]
 
-#             saving = dict()
-#             for i in range(gs-1):
-#                 j = i+1
-#                 saving[(i, j)] = CVRP.computeSaving(dep_cor[d], loc_now[d][i], loc_now[d][j])
-
-#             saving_lis = sorted(saving.items(), key=lambda kv: kv[1])
-
             saving_lis_v, saving_lis_i = sav.sort(0)
-#             saving_v_lis.append(saving_lis_v)
             saving_i_lis.append(saving_lis_i)        
             
-#         mat_v = torch.stack(saving_v_lis, 0)
         mat_i = torch.stack(saving_i_lis, 0)
         
-#         b=time.time()
         depot_loc = CVRP.depot(mat_i, dem_now_cpu, parts[d]-1)
-#         print(time.time()-b)
 
         return depot_loc.cuda()
 
@@ -216,22 +179,12 @@ class CVRP(object):
     def depot(saving_lis_i, dem, parts):
         bs, gs = dem.size()
 
-#         adding_number = gs-1
-#         ads = []
-#         for i in [c[0] for c in saving_lis]:
-
         matrix_one = torch.ones(bs,gs)
         for i in range(0,gs-1):
 
-#             ads.append(saving_lis[1][i])
-    #             adding+=saving[j]
             ads = saving_lis_i[:,0:i+1].sort(1)[0]
-#             print(ads)
             lis = []
-            for l in range(i+1-1):
-#                 w=time.time()
-#                 demc=dem.cpu()
-                
+            for l in range(i+1-1):             
 
                 mat_one = torch.ones(bs,gs)
                 mat_one[torch.arange(bs), ads[:,l].squeeze()]=0
@@ -239,12 +192,6 @@ class CVRP(object):
                 matt_one = torch.ones(bs,gs)
                 matt_one[torch.arange(bs), ads[:,l+1].squeeze()+1]=0                
                 ite = torch.cat((torch.flip(mat_one,[1])[None,:],matt_one[None,:]),0)
-#                 lis.append(dem[ads[l]+1:ads[l+1]+1].sum())
-
-#                 it=torch.ones(2,bs).cuda()
-#                 for k in range(gs):
-#                     it*=ite[:,:,k] 
-#                     ite[:,:,k]=it
                     
                 ite_ = torch.cumprod(ite, dim=2)
 
@@ -255,46 +202,30 @@ class CVRP(object):
                     lis.append(((sta==0).float()*dem).sum(1))
                 if l==(i-1):
                     end = ite_[1]   
-                    lis.append(((end==0).float()*dem).sum(1))
-#                 print(time.time()-w)    
+                    lis.append(((end==0).float()*dem).sum(1))   
             if i==0:
-#                 demc=dem.cpu()
                 mat_one = torch.ones(bs,gs)
                 mat_one[torch.arange(bs), ads[:,0].squeeze()]=0
 
                 matt_one = torch.ones(bs,gs)
                 matt_one[torch.arange(bs), ads[:,0].squeeze()+1]=0                
                 ite = torch.cat((torch.flip(mat_one,[1])[None,:],matt_one[None,:]),0)
-
-#                 it=torch.ones(2,bs).cuda()
-#                 for j in range(gs):
-#                     it*=ite[:,:,j] 
-#                     ite[:,:,j]=it
                 ite_ = torch.cumprod(ite, dim=2)
                 sta = torch.flip(ite_[0],[1])
 
                 end = ite_[1]   
                 lis.append(((sta==0).float()*dem).sum(1))
                 lis.append(((end==0).float()*dem).sum(1))                
-#             print(lis)
             mat_seg_dem = torch.stack(lis,1)
-
             mat_ind = ((mat_seg_dem<1.).sum(1))==i+2
-#             print(mat_ind)
             col = torch.nonzero(mat_ind==1)
-
-
-#                 print(col)
-            matrix_one[col.squeeze(),torch.zeros(len(col)).long()+i+1]=gs   
-#             print((matrix_one==gs).sum())
-            
+            matrix_one[col.squeeze(),torch.zeros(len(col)).long()+i+1]=gs           
             if all(matrix_one.sum(1)>gs):
                 retrive = matrix_one.clone()
                 for j in range(1,gs+1):
                     matrix_one[:,j-1]=retrive[:,0:j].sum(1)
                 ret = torch.cat((saving_lis_i.cpu(),torch.zeros(bs,1).long()),1)   
                 ret[matrix_one>gs]=gs
-#                 print((matrix_one>gs).sum(1))
                 return ret.sort(1)[0]
 
 
@@ -386,11 +317,6 @@ class VRPDataset(Dataset):
             samples = DataProcessor.get_batch(DT, len(DT))
             
             self.data = [
-                # {
-                #     'loc': torch.FloatTensor(size, 2).uniform_(0, 1),
-                #     'demand': torch.FloatTensor(size).uniform_(0, 1),
-                #     'depot': torch.FloatTensor(2).uniform_(0, 1)
-                # }
                 {
                     'loc': torch.cat((torch.FloatTensor(samples[i].route)[:,0:2], torch.FloatTensor(samples[i].route)[0,0:2].repeat(128-len(samples[i].route), 1)), 0),                  
                     'demand': torch.cat((torch.FloatTensor(samples[i].route)[:,2].float(), torch.zeros(128-len(samples[i].route))),0),
