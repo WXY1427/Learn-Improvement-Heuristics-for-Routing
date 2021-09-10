@@ -1,6 +1,6 @@
 # Learn-Improvement-Heuristics-for-Routing
 
-Yaoxin Wu, Wen Song, Zhiguang Cao, Jie Zhang and Andrew Lim. Learning Improvement Heuristics for Solving Routing Problems, IEEE Transactions on Neural Networks and Learning Systems, 2021. https://ieeexplore.ieee.org/document/9393606.
+Yaoxin Wu, Wen Song, Zhiguang Cao, Jie Zhang and Andrew Lim. Learning Improvement Heuristics for Solving Routing Problems, IEEE Transactions on Neural Networks and Learning Systems, 2021 (https://ieeexplore.ieee.org/document/9393606).
 
 ## Description
 
