@@ -15,9 +15,6 @@ import vrpDatagen
 from itertools import combinations, permutations
 import numpy as np
 
-
-
-
 class CVRP(object):
 
     NAME = 'cvrp'  # Capacitated Vehicle Routing Problem
@@ -56,8 +53,7 @@ class CVRP(object):
             
             order = (cor[:,0]*(g2s*2)+cor[:,1]).view(batch_size, -1).sort(1)[1]
             
-            cm = che_mask.view(batch_size, -1).gather(1,order)
-        
+            cm = che_mask.view(batch_size, -1).gather(1,order)       
 
             return length_now, rec, cm.flatten()
         else:
