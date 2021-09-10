@@ -93,27 +93,6 @@ class CVRP(object):
     @staticmethod
     def make_dataset(*args, **kwargs):
         return VRPDataset(*args, **kwargs)  
-    
-    @staticmethod
-    def seq_tensor(input, rec, capacity=1.):
-
-        depot_loc = CVRP.addings(input, rec)
-        bs, gs = input['demand'].size()
-        matrix_i = torch.ones(bs,2*gs).long().cuda()
-        matrix_acc = torch.zeros(bs,2*gs).long().cuda()
-        counter = 0
-        for i in range(gs-1):
-            matrix_i[torch.arange(bs).cuda(), depot_loc[:,i]+1+counter]=0 
-            counter+=1   
-        matrix_z_i = matrix_i.clone()
-        for i in range(2*gs):
-            matrix_acc[:,i]=matrix_i[:,:i+1].sum(1).clone()
-        
-        matrix_acc[matrix_acc>gs]=0
-        matrix_acc[matrix_z_i==0]=0       
-        dic = torch.cat((torch.zeros(bs,1).cuda(), rec),1)        
-        
-        return dic.gather(1, matrix_acc).long() 
 
 
     @staticmethod
