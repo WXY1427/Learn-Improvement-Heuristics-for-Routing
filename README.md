@@ -4,7 +4,7 @@ A deep reinforcement learning framework to learn the improvement heuristics （w
 
 ## Paper
 
-For more details, please refer to: Yaoxin Wu, Wen Song, Zhiguang Cao, Jie Zhang and Andrew Lim. Learning Improvement Heuristics for Solving Routing Problems, IEEE Transactions on Neural Networks and Learning Systems, 2021 (https://ieeexplore.ieee.org/document/9393606). 
+For more details, please refer to: Yaoxin Wu, Wen Song, Zhiguang Cao, Jie Zhang and Andrew Lim. Learning Improvement Heuristics for Solving Routing Problems, IEEE Transactions on Neural Networks and Learning Systems, vol. 33, no. 9, pp. 5057-5069, 2022 (https://ieeexplore.ieee.org/document/9393606). 
 
 ```
 @article{wu2021learning,
