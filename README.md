@@ -8,11 +8,13 @@ For more details, please refer to: Yaoxin Wu, Wen Song, Zhiguang Cao, Jie Zhang 
 
 ```
 @article{wu2021learning,
-  title={Learning Improvement Heuristics for Solving Routing Problems..},
+  title={Learning Improvement Heuristics for Solving Routing Problems},
   author={Wu, Yaoxin and Song, Wen and Cao, Zhiguang and Zhang, Jie and Lim, Andrew},
   journal={IEEE Transactions on Neural Networks and Learning Systems},
-  year={2021},
-  publisher={IEEE}
+  year={2022},
+  volume={33},
+  number={9},
+  pages={5057-5069}
 }
 ```
 
